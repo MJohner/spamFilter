@@ -1,5 +1,4 @@
 import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 
@@ -75,7 +74,7 @@ public class Dictionary {
      * @return
      * returns the probability of a word to be a spam word
      * if the word does not occur in the spam word list, the defined min occurrence will be returned
-     * this prevents words from being saved in booth lists
+     * this prevents words from being saved in booth lists and to get divide by 0 errors in the probability calculation
      */
     public double probablyToBeSpam(String word){
         if(probabilitySpamWords.containsKey(word)){
@@ -90,7 +89,7 @@ public class Dictionary {
      * @return
      * returns the probability of a word to be a ham word
      * if the word does not occur in the ham word list, the defined min occurrence will be returned
-     * this prevents words from being saved in booth lists
+     * this prevents words from being saved in booth lists and to get divide by 0 errors in the probability calculation
      */
     public double probablyToBeHam(String word){
         if(probabilityHamWords.containsKey(word)){

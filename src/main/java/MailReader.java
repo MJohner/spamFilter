@@ -27,10 +27,10 @@ public class MailReader {
         Path filePath = file.toPath();
         Files.readAllLines(filePath, StandardCharsets.ISO_8859_1)
                 .parallelStream()
-                .map(line -> line.split("\\s+")) // split lines by spaces
+                .map(line -> line.split("[\\s]+")) // split lines by spaces
                 .flatMap(Arrays::stream)// create streams for the lines
                 .parallel() // read lines parallel
-                .filter(w -> w.matches("[A-Za-z]{2,}+")) // read all words containing chars with length > 1
+                .filter(w -> w.matches("[A-Za-z]+")) // read all words containing chars with length > 1
                 .map(String::toLowerCase) // convert all words to lower case
                 .forEach(word -> {
                     mailWords.put(word, 1); // put the words to the word hash map
@@ -70,7 +70,7 @@ public class MailReader {
      * @param file
      * @return
      * @throws IOException
-     * Calculates the probability of a file to be spam according to its conntianing words and the words in the spam / ham list of the dictionary
+     * Calculates the probability of a file to be spam according to its containing words and the words in the spam / ham list of the dictionary
      */
     public static double probabilityToBeSpam(Dictionary d, File file) throws IOException {
         // use a precision of 64 bits in the calculation
