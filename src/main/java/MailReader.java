@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class MailReader {
     // estimated proportion of spam mails between 1 and 0
-    private static final double spamFactor = 0.6;
+    public static final double spamFactor = 0.6;
 
     /**
      *

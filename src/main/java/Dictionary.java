@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Dictionary {
 
     // the minimum occurrence of a word to be used in the probability calculations
-    private static final double minWordOccurrenceProbability = 0.001;
+    public static final double minWordOccurrenceProbability = 0.001;
     private int numberOfSpamMailsAnalyzed;
     private int numberOfHamMailsAnalyzed;
 

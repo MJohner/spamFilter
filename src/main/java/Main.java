@@ -30,18 +30,18 @@ public class Main {
                 ham++;
             }
         }
+
         DecimalFormat df = new DecimalFormat("#.##");
         int analyzedHamMails = hamFolder.listFiles().length;
         int analyzedSpamMails = spamFolder.listFiles().length;
         double correctAnalyzedHamMails = 100 - (100.0/analyzedHamMails)*ham;
-        double correctAnalyzedSpamMails = (100.0/analyzedSpamMails)*spam;
-        double averagePrecision =  (correctAnalyzedHamMails + correctAnalyzedSpamMails)/2;
-
-
+        double correctAnalyzedSpamMails = (100.0 / analyzedSpamMails)*spam;
+        double averagePrecision =  (correctAnalyzedHamMails + correctAnalyzedSpamMails) / 2;
 
         System.out.println("----Exercise conclusion----");
-        System.out.println("The highest statistic precision could be achieved with an alpha value of: " + alpha + " and an estimated spam rate of 60%");
+        System.out.println("The highest statistic precision could be achieved with an alpha value of: " + alpha + " and an estimated spam rate of " + MailReader.spamFactor*100 +"%.");
         System.out.println("The weighting of an false positive ham and a false negative spam are set to equal.");
+        System.out.println("The minimum occurrence probability of a word in a mail was set to: "+ d.minWordOccurrenceProbability);
         System.out.println();
         System.out.println("Analyzed ham mails: ");
         System.out.println(ham + " of " + analyzedHamMails + " where false classified as spam");
