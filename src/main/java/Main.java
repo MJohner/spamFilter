@@ -40,7 +40,6 @@ public class Main {
 
         System.out.println("----Exercise conclusion----");
         System.out.println("The highest statistic precision could be achieved with an alpha value of: " + alpha + " and an estimated spam rate of " + MailReader.spamFactor*100 +"%.");
-        System.out.println("The weighting of an false positive ham and a false negative spam are set to equal.");
         System.out.println("The minimum occurrence probability of a word in a mail was set to: "+ d.minWordOccurrenceProbability);
         System.out.println();
         System.out.println("Analyzed ham mails: ");
@@ -50,7 +49,7 @@ public class Main {
         System.out.println("Analyzed spam mails: ");
         System.out.println(spam + " of " + analyzedSpamMails + " have been correct classified as spam");
         System.out.println(df.format(correctAnalyzedSpamMails) + "% of the mails have been correct classified.");
-        System.out.println("The average precision of the statistic analysis: " + df.format(averagePrecision) + "%");
+        System.out.println("The overall precision of the statistic analysis: " + df.format(averagePrecision) + "%");
 
     }
 
