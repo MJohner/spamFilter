@@ -78,6 +78,9 @@ public class Dictionary {
      */
     public double probablyToBeSpam(String word){
         if(probabilitySpamWords.containsKey(word)){
+            if(probabilitySpamWords.get(word) == 1){
+                return 1-minWordOccurrenceProbability;
+            }
             return probabilitySpamWords.get(word);
         }else{
             return minWordOccurrenceProbability;
@@ -93,6 +96,9 @@ public class Dictionary {
      */
     public double probablyToBeHam(String word){
         if(probabilityHamWords.containsKey(word)){
+            if(probabilityHamWords.get(word) == 1){
+                return 1-minWordOccurrenceProbability;
+            }
             return probabilityHamWords.get(word);
         }else{
             return minWordOccurrenceProbability;

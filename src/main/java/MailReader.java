@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class MailReader {
     // estimated proportion of spam mails between 1 and 0
-    public static final double spamFactor = 0.6;
+    public static final double spamFactor = 0.44;
 
     /**
      *
@@ -81,6 +81,23 @@ public class MailReader {
             quotient.updateAndGet(v -> v.add(BigDecimal.valueOf((d.probablyToBeHam(w)*(1-spamFactor)) / (d.probablyToBeSpam(w)*spamFactor)), mc));
         });
         return (1/(quotient.get().doubleValue()+1))*100;
+    }
+
+    /**
+     *
+     * @param d
+     * @param file
+     * @return
+     * @throws IOException
+     * Calculates the probability of a file to be spam according to its containing words and the words in the spam / ham list of the dictionary
+     */
+    public static double probabilityToBeSpam2(Dictionary d, File file) throws IOException {
+        HashMap<String, Integer> words = readMail(file);
+        AtomicReference<Double> n = new AtomicReference(0.0);
+        words.forEach((w,p) -> {
+            n.updateAndGet(ni -> ni + Math.log(d.probablyToBeHam(w)*(1-spamFactor)) - Math.log(d.probablyToBeSpam(w)*spamFactor));
+        });
+        return (1/(Math.exp(n.get())+1))*100;
     }
 
 

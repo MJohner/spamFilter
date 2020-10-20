@@ -15,27 +15,27 @@ public class Main {
 
 
     public static void testMails(Dictionary d) throws IOException {
-        double alpha = 0.79;
+        double alpha = 99.7;
         File spamFolder = new File("src/resources/spam-test");
         File hamFolder = new File("src/resources/ham-test");
         int spam = 0;
         int ham = 0;
         for (File f : spamFolder.listFiles()) {
-            if (MailReader.probabilityToBeSpam(d, f) > alpha) {
+            if (MailReader.probabilityToBeSpam2(d, f) > alpha) {
                 spam++;
             }
         }
         for (File f : hamFolder.listFiles()) {
-            if (MailReader.probabilityToBeSpam(d, f) > alpha) {
+            if (MailReader.probabilityToBeSpam2(d, f) < alpha) {
                 ham++;
             }
         }
 
-        DecimalFormat df = new DecimalFormat("#.##");
+        DecimalFormat df = new DecimalFormat("###.###");
         int analyzedHamMails = hamFolder.listFiles().length;
         int analyzedSpamMails = spamFolder.listFiles().length;
-        double correctAnalyzedHamMails = 100 - (100.0/analyzedHamMails)*ham;
-        double correctAnalyzedSpamMails = (100.0 / analyzedSpamMails)*spam;
+        double correctAnalyzedHamMails = (double) ham/analyzedHamMails * 100;
+        double correctAnalyzedSpamMails = (double) spam/analyzedSpamMails * 100;
         double averagePrecision =  (correctAnalyzedHamMails + correctAnalyzedSpamMails) / 2;
 
         System.out.println("----Exercise conclusion----");
@@ -44,11 +44,11 @@ public class Main {
         System.out.println("The minimum occurrence probability of a word in a mail was set to: "+ d.minWordOccurrenceProbability);
         System.out.println();
         System.out.println("Analyzed ham mails: ");
-        System.out.println(ham + " of " + analyzedHamMails + " where false classified as spam");
+        System.out.println(ham + " of " + analyzedHamMails + " have been correct classified as ham");
         System.out.println(df.format(correctAnalyzedHamMails) + "% of the mails have been correct classified.");
         System.out.println();
         System.out.println("Analyzed spam mails: ");
-        System.out.println(spam + " of " + analyzedSpamMails + " where correct classified as spam");
+        System.out.println(spam + " of " + analyzedSpamMails + " have been correct classified as spam");
         System.out.println(df.format(correctAnalyzedSpamMails) + "% of the mails have been correct classified.");
         System.out.println("The average precision of the statistic analysis: " + df.format(averagePrecision) + "%");
 
@@ -71,21 +71,21 @@ public class Main {
         File spamFolder = new File("src/resources/spam-kallibrierung");
         File hamFolder = new File("src/resources/ham-kallibrierung");
 
-        for (double alpha = 0.1; alpha < 1.5; alpha += 0.1) {
+        for (double alpha = 99; alpha < 100; alpha +=0.1) {
             int spam = 0;
             int ham = 0;
             for (File f : spamFolder.listFiles()) {
-                if (MailReader.probabilityToBeSpam(d, f) > alpha) {
+                if (MailReader.probabilityToBeSpam2(d, f) > alpha) {
                     spam++;
                 }
             }
             for (File f : hamFolder.listFiles()) {
-                if (MailReader.probabilityToBeSpam(d, f) > alpha) {
+                if (MailReader.probabilityToBeSpam2(d, f) < alpha) {
                     ham++;
                 }
             }
             // the currentResult is the average of correct determined mails
-            currentResult = ((100.0 / spamFolder.listFiles().length * spam) + (100 - (100.0 / hamFolder.listFiles().length * ham)))/2;
+            currentResult = (double) (spam + ham)/(hamFolder.listFiles().length+spamFolder.listFiles().length)*100;
             if (bestResult < currentResult) {
                 bestResult = currentResult;
                 bestAlpha = alpha;
